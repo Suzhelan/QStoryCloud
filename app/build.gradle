@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'top.linl.qstorycloud'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "top.linl.qstorycloud"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    compileOnly("de.robv.android.xposed:api:82")
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.14'
+    implementation 'com.github.bumptech.glide:glide:5.0.0-rc01'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
+
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.51'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+
+}

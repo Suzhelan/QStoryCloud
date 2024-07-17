@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">QStory-自动云更新</string>
+    <string name="view_github">QStoryCloud Github</string>
+    <string name="tutorial">
+1.使用教程：将模块通过任意方式挂载到LSPosed,LSPatch内置/本地模式作用于QQ\n\n
+2.如果你不了解上述的框架，可以先进行搜索LSPosed，LSPatch了解其作用\n\n
+3.选择作用至QQ时，会自动拉取云端模块更新，显示在QQ通知栏中,下载完成重启即可
+    </string>
+    <string name="safe_mode">安全模式(开启后QQ不会挂载QStory模块,需要重启QQ)</string>
+    <string name="clean_data">重置更新数据,重新获取更新(执行后此开关会自动关闭）</string>
+    <string name="tip">
+        ps:本界面所有功能需要确保本模块处于后台运行状态\n\n
+        留言:此模块仅用作热更新示例学习,可点击查看上方Github卡片查看源码\n
+        @github Suzhelan\n
+        @github Suzhelan/QStoryCloud
+    </string>
+</resources>
