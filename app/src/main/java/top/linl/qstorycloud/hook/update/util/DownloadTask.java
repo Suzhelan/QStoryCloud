@@ -1,8 +1,10 @@
 package top.linl.qstorycloud.hook.update.util;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -43,6 +46,25 @@ public class DownloadTask {
         initializeNotification();
     }
 
+    private static boolean isAppForeground(Context context) {
+        ActivityManager activityManager =
+                (ActivityManager) context.getSystemService(Service.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfoList =
+                activityManager.getRunningAppProcesses();
+        if (runningAppProcessInfoList == null) {
+            return false;
+        }
+
+        for (ActivityManager.RunningAppProcessInfo processInfo : runningAppProcessInfoList) {
+            if (processInfo.processName.equals(context.getPackageName())
+                    && (processInfo.importance ==
+                    ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void initializeNotification() {
         // 创建一个通知频道 NotificationChannel
         NotificationChannel channel = new NotificationChannel(channelId, "QStoryCloud", NotificationManager.IMPORTANCE_DEFAULT);
@@ -54,12 +76,16 @@ public class DownloadTask {
         notificationManager.createNotificationChannel(channel);
     }
 
-    private void sendProgressNotification() {
+    private void sendProgressNotification(int size) {
         if (updateInfo == null) {
             return;
         }
         builder = new NotificationCompat.Builder(context, channelId);
         ActivityTools.injectResourcesToContext(context);
+        String contentText = "下载中 大小" + getNetFileSizeDescription(size) + " 切换QQ到后台可查看具体进度";
+        if (size == 0) {
+            contentText = "准备开始下载";
+        }
         builder.setContentTitle("QStory正在云更新到" + updateInfo.getLatestVersionName()) //设置标题
                 .setSmallIcon(R.mipmap.icon) //设置小图标
                 .setPriority(NotificationCompat.PRIORITY_MAX) //设置通知的优先级
@@ -67,14 +93,18 @@ public class DownloadTask {
                 .setAutoCancel(false) //设置通知被点击一次不自动取消
                 .setOngoing(true)
                 .setSound(null)
-                .setContentText("准备开始下载"); //设置内容;
+                .setContentText(contentText); //设置内容;
         notificationManager.notify(notificationFlag, builder.build());
     }
 
     private void updateNotification(int max, int progress) {
+        //qq在前台时通知被查看后会自动消失 因此只让qq在后台时通知进度
         if (builder == null) {
             return;
         }
+        //应用在前台不更新进度
+        if (isAppForeground(context)) return;
+
         if (progress >= 0) {
             builder.setContentText("进度:" + getNetFileSizeDescription(progress) + "/" + getNetFileSizeDescription(max));
             builder.setProgress(max, progress, false);
@@ -83,13 +113,11 @@ public class DownloadTask {
             builder.setContentText("下载完成");
             builder.setAutoCancel(true);
             builder.setOngoing(false);
-            sendDownloadSuccessNotification();
         }
         notificationManager.notify(notificationFlag, builder.build());
     }
 
     private void sendDownloadSuccessNotification() {
-        ToastTool.show("下载完成");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setContentTitle("QStory已更新到" + updateInfo.getLatestVersionName()) //设置标题
                 .setSmallIcon(R.mipmap.icon) //设置小图标
@@ -135,7 +163,8 @@ public class DownloadTask {
         if (!downloadPath.exists()) {
             downloadPath.createNewFile();
         }
-        sendProgressNotification();
+        sendProgressNotification(0);
+
         OkHttpClient client = new OkHttpClient.Builder().build();
         Request request = new Request
                 .Builder()
@@ -151,6 +180,7 @@ public class DownloadTask {
              BufferedOutputStream bufOut = new BufferedOutputStream(new FileOutputStream(downloadPath))) {
             //总字节数
             long size = response.body().contentLength();
+            sendProgressNotification((int) size);
             //发送通知
             long downloadSize = 0;
             int len;
@@ -158,11 +188,11 @@ public class DownloadTask {
             while ((len = bufIn.read(buf)) != -1) {
                 bufOut.write(buf, 0, len);
                 downloadSize += len;
-                //刷新进度
                 updateNotification((int) size, (int) downloadSize);
             }
             bufOut.flush();
         }
+        sendDownloadSuccessNotification();
     }
 
     /**

@@ -90,6 +90,8 @@ public class ModuleLoader {
             Method entryHookMethod = entryHookClass.getMethod("handleLoadPackage", XC_LoadPackage.LoadPackageParam.class);
 
             entryHookMethod.invoke(entryHookClass.newInstance(), HookEnv.getLoadPackageParam());
+
+
         } catch (Exception e) {
             QSLog.e("ModuleLoader", e);
         }

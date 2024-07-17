@@ -67,7 +67,7 @@ public class UpdateObserver implements Consumer<UpdateInfo> {
             //插入模块更新信息
             ModuleInfoDAO.insertModuleInfo(localModuleInfo);
             //数据库写入完成
-            ToastTool.show("更新任务执行成功,重启QQ");
+            ToastTool.show("更新任务执行成功,请重启QQ");
         } catch (Exception e) {
             ToastTool.show("更新失败：" + e);
             QSLog.e("更新失败", e);
