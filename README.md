@@ -13,7 +13,7 @@
 - OkHttp,RxJava,FastJSON
 - 跨进程通信（跨应用）ContentProvider
 - 热更新（基于DexClassLoader)
-- 设计模式
+- 设计模式:观察者，异步回调等
 ---
 ### 项目主要知识要点
  - 如何动态加载模块并进行Hook：[ModuleLoader](./app/src/main/java/top/linl/qstorycloud/hook/moduleloader/ModuleLoader.java)  
