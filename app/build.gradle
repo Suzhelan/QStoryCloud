@@ -14,14 +14,23 @@ android {
         applicationId "top.linl.qstorycloud"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
     }
 
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
+
+            if (getBuildType().getName() == "debug") return
+
+            outputFileName = "QStory自动云更新_${versionName}-" + getBuildType().getName() + ".apk"
         }
     }
 

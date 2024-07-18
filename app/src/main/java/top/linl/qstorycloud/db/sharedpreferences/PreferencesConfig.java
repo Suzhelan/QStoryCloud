@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 
 public class PreferencesConfig {
-    public static final String FileName = "QStoryCloudAPP";
+    public static final String FILE_NAME = "QStoryCloudAPP";
     private final Context context;
 
     public PreferencesConfig(Context context) {
@@ -13,45 +13,45 @@ public class PreferencesConfig {
     }
 
     public void remove(String key) {
-        SharedPreferences share = getContext().getSharedPreferences(FileName, 0);
+        SharedPreferences share = getContext().getSharedPreferences(FILE_NAME, 0);
         SharedPreferences.Editor editor = share.edit();
         editor.remove(key);
         editor.apply();
     }
 
     public String getString(String key) {
-        SharedPreferences share = getContext().getSharedPreferences(FileName, 0);
+        SharedPreferences share = getContext().getSharedPreferences(FILE_NAME, 0);
         return share.getString(key, "");
     }
 
     public void putString(String key, String value) {
-        SharedPreferences share = getContext().getSharedPreferences(FileName, 0);
+        SharedPreferences share = getContext().getSharedPreferences(FILE_NAME, 0);
         SharedPreferences.Editor editor = share.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
     public void putBoolean(String key, Boolean value) {
-        SharedPreferences share = getContext().getSharedPreferences(FileName, 0);
+        SharedPreferences share = getContext().getSharedPreferences(FILE_NAME, 0);
         SharedPreferences.Editor editor = share.edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
 
     public boolean getBoolean(String key) {
-        SharedPreferences share = getContext().getSharedPreferences(FileName, 0);
+        SharedPreferences share = getContext().getSharedPreferences(FILE_NAME, 0);
         return share.getBoolean(key, false);
     }
 
     public void putInt(String key, int i) {
-        SharedPreferences share = getContext().getSharedPreferences(FileName, 0);
+        SharedPreferences share = getContext().getSharedPreferences(FILE_NAME, 0);
         SharedPreferences.Editor editor = share.edit();
         editor.putInt(key, i);
         editor.apply();
     }
 
     public int getInt(String key) {
-        SharedPreferences share = getContext().getSharedPreferences(FileName, 0);
+        SharedPreferences share = getContext().getSharedPreferences(FILE_NAME, 0);
         return share.getInt(key, 0);
     }
 
