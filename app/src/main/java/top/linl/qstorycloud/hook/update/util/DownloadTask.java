@@ -46,7 +46,7 @@ public class DownloadTask {
         initializeNotification();
     }
 
-    private static boolean isAppForeground(Context context) {
+    private boolean isAppForeground(Context context) {
         ActivityManager activityManager =
                 (ActivityManager) context.getSystemService(Service.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfoList =
@@ -87,7 +87,7 @@ public class DownloadTask {
             contentText = "准备开始下载";
         }
         builder.setContentTitle("QStory正在云更新到" + updateInfo.getLatestVersionName()) //设置标题
-                .setSmallIcon(R.mipmap.icon) //设置小图标
+                .setSmallIcon(R.mipmap.ic_launcher_round) //设置小图标
                 .setPriority(NotificationCompat.PRIORITY_MAX) //设置通知的优先级
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(false) //设置通知被点击一次不自动取消
@@ -120,7 +120,7 @@ public class DownloadTask {
     private void sendDownloadSuccessNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setContentTitle("QStory已更新到" + updateInfo.getLatestVersionName()) //设置标题
-                .setSmallIcon(R.mipmap.icon) //设置小图标
+                .setSmallIcon(R.mipmap.ic_launcher_round) //设置小图标
                 .setPriority(NotificationCompat.PRIORITY_MAX) //设置通知的优先级
                 .setAutoCancel(false) //设置通知被点击一次不自动取消
                 .setOngoing(true)

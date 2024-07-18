@@ -6,6 +6,10 @@ android {
     namespace 'top.linl.qstorycloud'
     compileSdk 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId "top.linl.qstorycloud"
         minSdk 26

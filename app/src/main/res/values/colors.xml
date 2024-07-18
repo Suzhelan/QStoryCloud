@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     //灰色
-    <color name="grey">#ABACB1</color>
+    <color name="grey">#93939D</color>
 
+    <color name="c_view_github">#ABABAB</color>
+    <color name="add_telegram_channel">#66A4D7</color>
     <color name="colorPrimary">#3F51B5</color>
 </resources>

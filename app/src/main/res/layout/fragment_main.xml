@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:cardBackgroundColor="#919a91"
+        app:cardBackgroundColor="@color/c_view_github"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:cardMaxElevation="15dp"
@@ -55,6 +55,44 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_add_telegram_channel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="@color/add_telegram_channel"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="15dp"
+        app:contentPadding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_view_github">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start"
+                android:importantForAccessibility="no"
+                android:src="@drawable/telegram_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:text="@string/add_telegram_channel"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_tutorial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,7 +104,7 @@
         app:contentPadding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_github">
+        app:layout_constraintTop_toBottomOf="@id/card_add_telegram_channel">
 
         <TextView
             android:layout_width="match_parent"
@@ -74,6 +112,14 @@
             android:text="@string/tutorial" />
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_build_version"
+        android:text="@string/build_version"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/card_tutorial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -83,7 +129,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/cb_safe_mode"
         android:text="@string/safe_mode"
-        app:layout_constraintTop_toBottomOf="@id/card_tutorial" />
+        app:layout_constraintTop_toBottomOf="@id/tv_build_version" />
 
     <CheckBox
         android:layout_width="wrap_content"
