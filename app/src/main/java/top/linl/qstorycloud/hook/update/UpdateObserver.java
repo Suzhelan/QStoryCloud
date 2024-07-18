@@ -7,7 +7,7 @@ import top.linl.qstorycloud.db.ModuleInfoDAO;
 import top.linl.qstorycloud.db.UpdateInfoDAO;
 import top.linl.qstorycloud.hook.HookEnv;
 import top.linl.qstorycloud.hook.PathTool;
-import top.linl.qstorycloud.hook.moduleloader.module.LocalModuleInfo;
+import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
 import top.linl.qstorycloud.hook.update.model.UpdateInfo;
 import top.linl.qstorycloud.hook.update.util.DownloadTask;
 import top.linl.qstorycloud.hook.util.ToastTool;

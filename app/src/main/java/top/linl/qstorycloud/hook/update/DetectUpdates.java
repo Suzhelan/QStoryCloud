@@ -19,7 +19,7 @@ import okhttp3.Response;
 import top.linl.qstorycloud.db.ModuleInfoDAO;
 import top.linl.qstorycloud.db.helper.UpdateDBHelper;
 import top.linl.qstorycloud.hook.HookEnv;
-import top.linl.qstorycloud.hook.moduleloader.module.LocalModuleInfo;
+import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
 import top.linl.qstorycloud.hook.update.model.UpdateInfo;
 import top.linl.qstorycloud.hook.util.ToastTool;
 import top.linl.qstorycloud.log.QSLog;

@@ -1,4 +1,4 @@
-package top.linl.qstorycloud.hook.moduleloader.module;
+package top.linl.qstorycloud.hook.moduleloader.model;
 
 public class LocalModuleInfo {
     private String moduleName;

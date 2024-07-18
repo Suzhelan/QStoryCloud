@@ -13,7 +13,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import top.linl.qstorycloud.db.ModuleInfoDAO;
 import top.linl.qstorycloud.hook.HookEnv;
 import top.linl.qstorycloud.hook.PathTool;
-import top.linl.qstorycloud.hook.moduleloader.module.LocalModuleInfo;
+import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
 import top.linl.qstorycloud.log.QSLog;
 
 /**

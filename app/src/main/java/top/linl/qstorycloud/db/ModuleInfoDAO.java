@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import top.linl.qstorycloud.db.helper.UpdateDBHelper;
-import top.linl.qstorycloud.hook.moduleloader.module.LocalModuleInfo;
+import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
 
 /**
  * 模块信息dao
