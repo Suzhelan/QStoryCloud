@@ -24,7 +24,7 @@ import top.linl.qstorycloud.hook.update.model.UpdateInfo;
 import top.linl.qstorycloud.hook.util.ToastTool;
 import top.linl.qstorycloud.log.QSLog;
 
-public class DetectUpdates {
+public class UpdateChecker {
     private final String detectUpdatesUrl = "https://qstory.linl.top/update/detectUpdates";
 
     private UpdateInfo lastUpdateInfo;

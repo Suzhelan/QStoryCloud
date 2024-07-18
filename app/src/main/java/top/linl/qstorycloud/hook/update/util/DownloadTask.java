@@ -152,6 +152,12 @@ public class DownloadTask {
     }
 
 
+    /**
+     * 真正被外部调用的下载方法
+     *
+     * @param url 下载链接
+     * @param path 路径
+     */
     public void download(String url, String path) throws IOException {
         File downloadPath = new File(path);
         if (!downloadPath.getParentFile().exists()) {
@@ -197,6 +203,7 @@ public class DownloadTask {
 
     /**
      * 处理通知栏点击事件
+     * @deprecated
      */
     public class NotificationClickReceiver extends BroadcastReceiver {
         @Override
