@@ -16,7 +16,7 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import top.linl.qstorycloud.db.ModuleInfoDAO;
+import top.linl.qstorycloud.db.LocalModuleInfoDAO;
 import top.linl.qstorycloud.db.helper.UpdateDBHelper;
 import top.linl.qstorycloud.hook.HookEnv;
 import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
@@ -74,7 +74,7 @@ public class UpdateChecker {
      * 请求最新版本
      */
     private UpdateInfo getUpdateInfo() {
-        LocalModuleInfo localModuleInfo = ModuleInfoDAO.getLastModuleInfo();
+        LocalModuleInfo localModuleInfo = LocalModuleInfoDAO.getLastModuleInfo();
         int moduleVersionCode = 0;
         if (localModuleInfo != null) {
             moduleVersionCode = localModuleInfo.getModuleVersionCode();

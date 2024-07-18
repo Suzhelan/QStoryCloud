@@ -23,7 +23,10 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
 
+    aaptOptions {
+        additionalParameters '--allow-reserved-package-id', '--package-id', '0x18'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

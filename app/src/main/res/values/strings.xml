@@ -15,5 +15,8 @@
         @github Suzhelan\n
         @github Suzhelan/QStoryCloud
     </string>
-    <string name="build_version">构建版本为:%s , 云端模块版本为:%s</string>
+    <string name="module_introduction">
+        自动检测QStory的更新，并且自动更新加载到QQ,减少用户手动更新的麻烦</string>
+    <string name="build_version">QStory加载器版本为:%s , 云端模块版本为:%s</string>
+    <string name="update_log_dialog_title">QStory已更新到%s</string>
 </resources>

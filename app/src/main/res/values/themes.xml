@@ -4,4 +4,8 @@
     <style name="Theme.APP" parent="Theme.Material3.Light.NoActionBar">
     </style>
 
+    <!--自定义Dialog样式-->
+    <style name="theme.dialog" parent="Theme.Material3.Light.Dialog.Alert">
+
+    </style>
 </resources>

@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 import dalvik.system.DexClassLoader;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
-import top.linl.qstorycloud.db.ModuleInfoDAO;
+import top.linl.qstorycloud.db.LocalModuleInfoDAO;
 import top.linl.qstorycloud.hook.HookEnv;
 import top.linl.qstorycloud.hook.PathTool;
 import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
@@ -26,7 +26,7 @@ public class ModuleLoader {
      */
     private boolean hasConditionLoading() {
         //模块信息为空
-        LocalModuleInfo localModuleInfo = ModuleInfoDAO.getLastModuleInfo();
+        LocalModuleInfo localModuleInfo = LocalModuleInfoDAO.getLastModuleInfo();
         if (localModuleInfo == null) return false;
         //模块文件为空
         File moduleApkFile = new File(localModuleInfo.getModuleApkPath());
@@ -59,7 +59,7 @@ public class ModuleLoader {
         //打开了安全模式不加载模块
         if (isOpenSafeMode()) return;
         if (hasConditionLoading()) {
-            LocalModuleInfo localModuleInfo = ModuleInfoDAO.getLastModuleInfo();
+            LocalModuleInfo localModuleInfo = LocalModuleInfoDAO.getLastModuleInfo();
             //加载模块
             loadModuleAPKAndHook(localModuleInfo.getModuleApkPath());
         }

@@ -3,7 +3,7 @@ package top.linl.qstorycloud.hook.update;
 import java.io.File;
 
 import io.reactivex.rxjava3.functions.Consumer;
-import top.linl.qstorycloud.db.ModuleInfoDAO;
+import top.linl.qstorycloud.db.LocalModuleInfoDAO;
 import top.linl.qstorycloud.db.UpdateInfoDAO;
 import top.linl.qstorycloud.hook.HookEnv;
 import top.linl.qstorycloud.hook.PathTool;
@@ -27,13 +27,12 @@ public class UpdateObserver implements Consumer<UpdateInfo> {
         if (updateInfo.getUpdateUrl() == null) return;
 
         UpdateInfo localUpdateInfo = UpdateInfoDAO.getLastUpdateInfo();
-        LocalModuleInfo localModuleInfo = ModuleInfoDAO.getLastModuleInfo();
+        LocalModuleInfo localModuleInfo = LocalModuleInfoDAO.getLastModuleInfo();
 
         //判断更新信息是否已经存在于数据库,不存在则插入
         if (!updateInfo.equals(localUpdateInfo)) {
             UpdateInfoDAO.insertUpdateInfo(updateInfo);
         }
-
 
         //检测是否是首次使用或者有云端更新
         //本地模块信息为空说明是第一次使用 || 本地模块版本号小于最新云端版本号
@@ -63,9 +62,9 @@ public class UpdateObserver implements Consumer<UpdateInfo> {
             localModuleInfo.setModuleName(updateInfo.getLatestVersionName());
             localModuleInfo.setModuleVersionCode(updateInfo.getLatestVersionCode());
             localModuleInfo.setModuleVersionName(updateInfo.getLatestVersionName());
-            localModuleInfo.setLoad(false);
+            localModuleInfo.setUpdateLogHaveRead(false);
             //插入模块更新信息
-            ModuleInfoDAO.insertModuleInfo(localModuleInfo);
+            LocalModuleInfoDAO.insertModuleInfo(localModuleInfo);
             //数据库写入完成
             ToastTool.show("更新任务执行成功,请重启QQ");
         } catch (Exception e) {

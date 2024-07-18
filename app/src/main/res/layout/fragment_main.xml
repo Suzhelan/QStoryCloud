@@ -30,28 +30,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_app_label">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
+                android:id="@+id/iv_github_logo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="start"
                 android:importantForAccessibility="no"
                 android:src="@drawable/github" />
 
             <TextView
+                android:id="@+id/tv_github_label"
+                android:layout_toEndOf="@id/iv_github_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
                 android:text="@string/view_github"
                 android:textSize="20sp" />
 
-        </LinearLayout>
+            <TextView
+                android:layout_toEndOf="@id/iv_github_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_github_label"
+                android:layout_marginStart="20dp"
+                android:text="@string/module_introduction"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView

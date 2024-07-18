@@ -18,7 +18,7 @@ public class UpdateDBHelper extends SQLiteOpenHelper {
     public static final String MODULE_INFO_TABLE = "module_info";
 
     public UpdateDBHelper(Context context) {
-        super(context, DATABASE, null, 2);
+        super(context, DATABASE, null, 3);
     }
 
     public static UpdateDBHelper getInstance() {
@@ -29,9 +29,9 @@ public class UpdateDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //建表
         //更新信息表
-        db.execSQL("CREATE TABLE " + UPDATE_TABLE + " (id INTEGER PRIMARY KEY AUTOINCREMENT,has_update INTEGER,latest_version_code INTEGER,latest_version_name TEXT,mandatory_update INTEGER,sender TEXT,update_log TEXT,update_url TEXT,update_time INTEGER)");
+        db.execSQL("CREATE TABLE " + UPDATE_TABLE + " (id INTEGER PRIMARY KEY AUTOINCREMENT,has_update INTEGER,latest_version_code INTEGER,latest_version_name TEXT,mandatory_update INTEGER,sender TEXT,update_log TEXT,update_url TEXT,update_time INTEGER,have_read INTEGER)");
         //本地模块表
-        db.execSQL("CREATE TABLE " + MODULE_INFO_TABLE + " (id INTEGER PRIMARY KEY AUTOINCREMENT,module_apk_path TEXT,module_name TEXT,module_version_code INTEGER,module_version_name TEXT,load INTEGER,update_time INTEGER)");
+        db.execSQL("CREATE TABLE " + MODULE_INFO_TABLE + " (id INTEGER PRIMARY KEY AUTOINCREMENT,module_apk_path TEXT,module_name TEXT,module_version_code INTEGER,module_version_name TEXT,load INTEGER,update_time INTEGER,update_log_have_read INTEGER)");
     }
 
 

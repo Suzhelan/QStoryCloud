@@ -5,7 +5,7 @@ public class LocalModuleInfo {
     private String moduleVersionName;
     private int moduleVersionCode;
     private String moduleApkPath;
-    private boolean isLoad;
+    private boolean updateLogHaveRead;
 
     private long updateTime = System.currentTimeMillis();
 
@@ -48,11 +48,11 @@ public class LocalModuleInfo {
         this.moduleApkPath = moduleApkPath;
     }
 
-    public boolean isLoad() {
-        return isLoad;
+    public boolean isUpdateLogHaveRead() {
+        return updateLogHaveRead;
     }
 
-    public void setLoad(boolean load) {
-        isLoad = load;
+    public void setUpdateLogHaveRead(boolean updateLogHaveRead) {
+        this.updateLogHaveRead = updateLogHaveRead;
     }
 }

@@ -13,6 +13,15 @@ public class UpdateInfo implements Serializable {
     private String updateLog;
     private Boolean mandatoryUpdate;
     private long updateTime = System.currentTimeMillis();
+    private boolean haveRead = false;
+
+    public boolean isHaveRead() {
+        return haveRead;
+    }
+
+    public void setHaveRead(boolean haveRead) {
+        this.haveRead = haveRead;
+    }
 
     public long getUpdateTime() {
         return updateTime;

@@ -10,7 +10,7 @@ import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
 /**
  * 模块信息dao
  */
-public class ModuleInfoDAO {
+public class LocalModuleInfoDAO {
 
     public static UpdateDBHelper getInstance() {
         return UpdateDBHelper.getInstance();
@@ -26,7 +26,7 @@ public class ModuleInfoDAO {
             int moduleName = cursor.getColumnIndex("module_name");
             int moduleVersionCode = cursor.getColumnIndex("module_version_code");
             int moduleVersionName = cursor.getColumnIndex("module_version_name");
-            int load = cursor.getColumnIndex("load");
+            int updateLogHaveRead = cursor.getColumnIndex("update_log_have_read");
             int updateTim = cursor.getColumnIndex("update_time");
             if (cursor.moveToFirst()) {
                 LocalModuleInfo localModuleInfo = new LocalModuleInfo();
@@ -34,7 +34,7 @@ public class ModuleInfoDAO {
                 localModuleInfo.setModuleName(cursor.getString(moduleName));
                 localModuleInfo.setModuleVersionCode(cursor.getInt(moduleVersionCode));
                 localModuleInfo.setModuleVersionName(cursor.getString(moduleVersionName));
-                localModuleInfo.setLoad(cursor.getInt(load) == 1);
+                localModuleInfo.setUpdateLogHaveRead(cursor.getInt(updateLogHaveRead) == 1);
                 localModuleInfo.setUpdateTime(cursor.getLong(updateTim));
                 return localModuleInfo;
             }
@@ -52,7 +52,8 @@ public class ModuleInfoDAO {
             cv.put("module_name", localModuleInfo.getModuleName());
             cv.put("module_version_code", localModuleInfo.getModuleVersionCode());
             cv.put("module_version_name", localModuleInfo.getModuleVersionName());
-            cv.put("load", localModuleInfo.isLoad() ? 1 : 0);
+            cv.put("update_log_have_read", localModuleInfo.isUpdateLogHaveRead() ? 1 : 0);
+            cv.put("update_time", localModuleInfo.getUpdateTime());
             db.insert(UpdateDBHelper.MODULE_INFO_TABLE, null, cv);
         }
     }

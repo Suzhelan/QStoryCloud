@@ -20,7 +20,7 @@ public class HookInject implements IXposedHookLoadPackage, IXposedHookZygoteInit
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
-
+        HookEnv.setModuleApkPath(startupParam.modulePath);
     }
 
     private void initAppContext(Context applicationContext) {
