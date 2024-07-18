@@ -5,9 +5,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
@@ -25,10 +23,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import top.linl.qstorycloud.R;
 import top.linl.qstorycloud.db.UpdateInfoDAO;
-import top.linl.qstorycloud.hook.HookEnv;
 import top.linl.qstorycloud.hook.update.model.UpdateInfo;
 import top.linl.qstorycloud.hook.util.ActivityTools;
-import top.linl.qstorycloud.hook.util.ToastTool;
 
 public class DownloadTask {
 
@@ -38,7 +34,6 @@ public class DownloadTask {
     private final UpdateInfo updateInfo;
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
-    private NotificationClickReceiver clickReceiver;
 
     public DownloadTask(Context context) {
         this.context = context;
@@ -201,16 +196,4 @@ public class DownloadTask {
         sendDownloadSuccessNotification();
     }
 
-    /**
-     * 处理通知栏点击事件
-     * @deprecated
-     */
-    public class NotificationClickReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ToastTool.show("点击了通知");
-            //点击退出
-            ActivityTools.killAppProcess(HookEnv.getHostAppContext());
-        }
-    }
 }
