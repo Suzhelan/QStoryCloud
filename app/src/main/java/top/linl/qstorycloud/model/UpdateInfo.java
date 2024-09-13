@@ -1,4 +1,4 @@
-package top.linl.qstorycloud.hook.update.model;
+package top.linl.qstorycloud.model;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -28,7 +28,7 @@ import okhttp3.Response;
 import top.linl.qstorycloud.BuildConfig;
 import top.linl.qstorycloud.R;
 import top.linl.qstorycloud.db.helper.CommonDBHelper;
-import top.linl.qstorycloud.hook.update.model.UpdateInfo;
+import top.linl.qstorycloud.model.UpdateInfo;
 import top.linl.qstorycloud.log.QSLog;
 import top.linl.qstorycloud.util.TaskManager;
 

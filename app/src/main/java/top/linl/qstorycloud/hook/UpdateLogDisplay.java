@@ -9,11 +9,11 @@ import java.lang.reflect.Method;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import top.linl.qstorycloud.R;
-import top.linl.qstorycloud.db.LocalModuleInfoDAO;
-import top.linl.qstorycloud.db.UpdateInfoDAO;
-import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
-import top.linl.qstorycloud.hook.update.model.UpdateInfo;
+import top.linl.qstorycloud.config.LocalModuleData;
+import top.linl.qstorycloud.config.UpdateInfoData;
 import top.linl.qstorycloud.hook.util.ActivityTools;
+import top.linl.qstorycloud.model.LocalModuleInfo;
+import top.linl.qstorycloud.model.UpdateInfo;
 
 /**
  * 展示更新日志
@@ -29,8 +29,8 @@ public class UpdateLogDisplay {
             XposedBridge.hookMethod(onCreateMethod, new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    UpdateInfo updateInfo = UpdateInfoDAO.getLastUpdateInfo();
-                    LocalModuleInfo moduleInfo = LocalModuleInfoDAO.getLastModuleInfo();
+                    UpdateInfo updateInfo = UpdateInfoData.INSTANCE.getLastUpdateInfo();
+                    LocalModuleInfo moduleInfo = LocalModuleData.getLastModuleInfo();
                     if (updateInfo == null || moduleInfo == null) {
                         return;
                     }
@@ -63,7 +63,7 @@ public class UpdateLogDisplay {
                 .setPositiveButton(
                         "确定", (dialog, which) -> {
                             updateInfo.setHaveRead(true);
-                            UpdateInfoDAO.updateUpdateInfo(updateInfo);
+                            UpdateInfoData.INSTANCE.updateLastUpdateInfo(updateInfo);
                             dialog.dismiss();
                         })
                 .setNeutralButton("喵", (dialog, which) -> {

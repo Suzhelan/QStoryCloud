@@ -1,4 +1,4 @@
-package top.linl.qstorycloud.hook.update.util;
+package top.linl.qstorycloud.hook.update;
 
 import android.app.ActivityManager;
 import android.app.Notification;
@@ -22,9 +22,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import top.linl.qstorycloud.R;
-import top.linl.qstorycloud.db.UpdateInfoDAO;
-import top.linl.qstorycloud.hook.update.model.UpdateInfo;
 import top.linl.qstorycloud.hook.util.ActivityTools;
+import top.linl.qstorycloud.model.UpdateInfo;
 
 public class DownloadTask {
 
@@ -35,9 +34,9 @@ public class DownloadTask {
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
 
-    public DownloadTask(Context context) {
+    public DownloadTask(Context context,UpdateInfo updateInfo) {
         this.context = context;
-        updateInfo = UpdateInfoDAO.getLastUpdateInfo();
+        this.updateInfo = updateInfo;
         initializeNotification();
     }
 

@@ -1,11 +1,12 @@
-package top.linl.qstorycloud.hook.moduleloader.model;
+package top.linl.qstorycloud.model;
 
-public class LocalModuleInfo {
+import java.io.Serializable;
+
+public class LocalModuleInfo implements Serializable {
     private String moduleName;
     private String moduleVersionName;
     private int moduleVersionCode;
     private String moduleApkPath;
-    private boolean updateLogHaveRead;
 
     private long updateTime = System.currentTimeMillis();
 
@@ -48,11 +49,6 @@ public class LocalModuleInfo {
         this.moduleApkPath = moduleApkPath;
     }
 
-    public boolean isUpdateLogHaveRead() {
-        return updateLogHaveRead;
-    }
 
-    public void setUpdateLogHaveRead(boolean updateLogHaveRead) {
-        this.updateLogHaveRead = updateLogHaveRead;
-    }
+
 }

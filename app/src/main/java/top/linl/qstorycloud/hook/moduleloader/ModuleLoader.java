@@ -5,16 +5,18 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import dalvik.system.DexClassLoader;
+import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
-import top.linl.qstorycloud.db.LocalModuleInfoDAO;
+import top.linl.qstorycloud.config.LocalModuleData;
 import top.linl.qstorycloud.hook.HookEnv;
 import top.linl.qstorycloud.hook.PathTool;
-import top.linl.qstorycloud.hook.moduleloader.model.LocalModuleInfo;
 import top.linl.qstorycloud.log.QSLog;
+import top.linl.qstorycloud.model.LocalModuleInfo;
 
 /**
  * 模块加载器，真正加载模块apk的地方
@@ -26,12 +28,13 @@ public class ModuleLoader {
      */
     private boolean hasConditionLoading() {
         //模块信息为空
-        LocalModuleInfo localModuleInfo = LocalModuleInfoDAO.getLastModuleInfo();
-        if (localModuleInfo == null) return false;
+        LocalModuleInfo localModuleInfo = LocalModuleData.getLastModuleInfo();
+        if (localModuleInfo == null) {
+            return false;
+        }
         //模块文件为空
         File moduleApkFile = new File(localModuleInfo.getModuleApkPath());
-        if (!moduleApkFile.exists()) return false;
-        return true;
+        return moduleApkFile.exists();
     }
 
     /**
@@ -59,7 +62,7 @@ public class ModuleLoader {
         //打开了安全模式不加载模块
         if (isOpenSafeMode()) return;
         if (hasConditionLoading()) {
-            LocalModuleInfo localModuleInfo = LocalModuleInfoDAO.getLastModuleInfo();
+            LocalModuleInfo localModuleInfo = LocalModuleData.getLastModuleInfo();
             //加载模块
             loadModuleAPKAndHook(localModuleInfo.getModuleApkPath());
         }
@@ -80,18 +83,21 @@ public class ModuleLoader {
         try {
             DexClassLoader dexClassLoader = new DexClassLoader(pluginApkPath, optimizedDirectoryFile.getPath(),
                     null, XposedBridge.class.getClassLoader());
-            //反射调用
-            //优先初始化模块路径 这样就可以略过 void initZygote(StartupParam startupParam)方法
-            Class<?> moduleHookEnvClass = dexClassLoader.loadClass("lin.xposed.hook.HookEnv");
-            Method setModuleApkPathMethod = moduleHookEnvClass.getMethod("setModuleApkPath", String.class);
-            setModuleApkPathMethod.invoke(null, pluginApkPath);
-            //hook初始化流程
+            //获取插件的入口类 也就是实现了IXposedHookLoadPackage, IXposedHookZygoteInit的类
             Class<?> entryHookClass = dexClassLoader.loadClass("lin.xposed.hook.InitInject");
+            Object hookInjectInstance = entryHookClass.newInstance();
+            //初始化zygote 一定是比handleLoadPackage先调用的
+            Method initZygoteMethod = entryHookClass.getMethod("initZygote", IXposedHookZygoteInit.StartupParam.class);
+            //反射new实例
+            Constructor<IXposedHookZygoteInit.StartupParam> constructor = IXposedHookZygoteInit.StartupParam.class.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            IXposedHookZygoteInit.StartupParam startupParam = constructor.newInstance();
+            startupParam.modulePath = pluginApkPath;
+            startupParam.startsSystemServer = false;
+            initZygoteMethod.invoke(hookInjectInstance, startupParam);
+            //正常的hook初始化流程
             Method entryHookMethod = entryHookClass.getMethod("handleLoadPackage", XC_LoadPackage.LoadPackageParam.class);
-
-            entryHookMethod.invoke(entryHookClass.newInstance(), HookEnv.getLoadPackageParam());
-
-
+            entryHookMethod.invoke(hookInjectInstance, HookEnv.getLoadPackageParam());
         } catch (Exception e) {
             QSLog.e("ModuleLoader", e);
         }
