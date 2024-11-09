@@ -16,8 +16,10 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,9 +30,10 @@ import okhttp3.Response;
 import top.linl.qstorycloud.BuildConfig;
 import top.linl.qstorycloud.R;
 import top.linl.qstorycloud.db.helper.CommonDBHelper;
-import top.linl.qstorycloud.model.UpdateInfo;
 import top.linl.qstorycloud.log.QSLog;
 import top.linl.qstorycloud.util.TaskManager;
+import top.sacz.qstory.net.UpdateInfo;
+import top.sacz.qstory.net.bean.QSResult;
 
 
 public class MainFragment extends Fragment {
@@ -97,11 +100,11 @@ public class MainFragment extends Fragment {
     private void requestLatestVersionName() {
         OkHttpClient client = new OkHttpClient.Builder().build();
         FormBody formBody = new FormBody.Builder()
-                .add("versionCode", "150")
+                .add("version", "0")
                 .build();
         Request request = new Request
                 .Builder()
-                .url("https://qstory.linl.top/update/detectUpdates")
+                .url("https://qstory.sacz.top/update/getUpdateLog")
                 .post(formBody)
                 .addHeader("User-Agent", "Android")
                 .addHeader("Content-Type", "text/plain")
@@ -118,11 +121,13 @@ public class MainFragment extends Fragment {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 TaskManager.addTask(() -> {
                             try {
-                                UpdateInfo updateInfo = JSON.parseObject(response.body().string(), UpdateInfo.class);
+                                TypeReference<QSResult<List<UpdateInfo>>> typeReference = new TypeReference<>() {
+                                };
+                                UpdateInfo updateInfo = JSON.parseObject(response.body().string(), typeReference).getData().get(0);
                                 Context context = getContext();
                                 if (context == null) return;
                                 String buildVersionFormat = context.getString(R.string.build_version);
-                                tvBuildVersion.setText(String.format(buildVersionFormat, BuildConfig.VERSION_NAME, updateInfo.getLatestVersionName()));
+                                tvBuildVersion.setText(String.format(buildVersionFormat, BuildConfig.VERSION_NAME, updateInfo.getVersionName()));
                             } catch (IOException e) {
                                 QSLog.e("MainFragment", e);
                             }

@@ -6,7 +6,7 @@ import top.linl.qstorycloud.model.UpdateInfo
 import top.linl.qstorycloud.util.SpHelper
 
 object UpdateInfoData {
-    private val spHelper = SpHelper.getMMKV("UpdateInfoData")
+    private val spHelper = SpHelper("UpdateInfoData")
 
     fun getLastUpdateInfo(): UpdateInfo? {
         val data = getDataList()
@@ -18,23 +18,23 @@ object UpdateInfoData {
 
     fun updateLastUpdateInfo(updateInfo: UpdateInfo) {
         val data = getDataList()
-        data.removeLast()
+        data.removeAt(data.size - 1)
         data.add(updateInfo)
-        spHelper.encode("dataList", data)
+        spHelper.put("dataList", data)
     }
 
     fun addUpdateInfo(updateInfo: UpdateInfo) {
         val data = getDataList()
         data.add(updateInfo)
-        spHelper.encode("dataList", data)
+        spHelper.put("dataList", data)
     }
 
     fun clear() {
-        spHelper.encode("dataList", ArrayList<LocalModuleInfo>())
+        spHelper.put("dataList", ArrayList<LocalModuleInfo>())
     }
 
     private fun getDataList(): MutableList<UpdateInfo> {
-        return spHelper.decodeType("dataList", object : TypeReference<MutableList<UpdateInfo>>() {})
+        return spHelper.getType("dataList", object : TypeReference<MutableList<UpdateInfo>>() {})
             ?: mutableListOf()
     }
 }

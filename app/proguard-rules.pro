@@ -23,6 +23,7 @@
 -keep class * extends android.app.Activity {*;}
 -keep class * extends android.content.ContentProvider {*;}
 -keep class top.linl.qstorycloud.hook.HookInject {*;}
+-keep class top.sacz.qstory.** {*;}
 -keepclassmembers enum * {
     public static **[] values();
     public static ** valueOf(java.lang.String);

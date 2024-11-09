@@ -14,7 +14,7 @@ import java.io.File
 
 class UpdateChecker : FlowCollector<UpdateInfo> {
 
-    val spHelper = SpHelper.getMMKV("UpdateChecker")
+    val spHelper = SpHelper("UpdateChecker")
 
     override suspend fun emit(value: UpdateInfo) {
         QSLog.d(this, "UpdateInfo: $value")

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.util.Log;
 
-import com.tencent.mmkv.MMKV;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,6 +14,7 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import top.linl.qstorycloud.hook.util.ActivityTools;
+import top.linl.qstorycloud.util.SpHelper;
 
 public class HookInject implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
@@ -31,9 +31,8 @@ public class HookInject implements IXposedHookLoadPackage, IXposedHookZygoteInit
         HookEnv.setHostApkPath(applicationContext.getApplicationInfo().sourceDir);//apk path
         ActivityTools.injectResourcesToContext(applicationContext);
         //初始化mmkv和自定义路径
-        String dataDir = applicationContext.getDataDir().getAbsolutePath() + "/qstory_config";
-        MMKV.initialize(applicationContext,dataDir);
-        MMKV.registerContentChangeNotify(mmapID -> Log.d("qstorycloud", "mmkv change :"+mmapID));
+        String dataDir = applicationContext.getDataDir().getAbsolutePath() + "/qstory_cloud_config";
+        SpHelper.Companion.initialize(dataDir);
         //使用这个类加载器 因为框架可能会提供不正确的类加载器，我没有反射工具包装类 所以就不写了
         ClassLoader hostClassLoader = applicationContext.getClassLoader();
         HookInit hookInit = new HookInit();

@@ -1,7 +1,10 @@
 package top.linl.qstorycloud.hook;
 
+
 import top.linl.qstorycloud.hook.moduleloader.ModuleLoader;
 import top.linl.qstorycloud.hook.update.UpdateObserver;
+import top.sacz.qstory.hook.UpdateTask;
+import top.sacz.qstory.hook.ui.UpdateLogDisplay;
 
 public class HookInit {
 
@@ -15,8 +18,8 @@ public class HookInit {
             UpdateLogDisplay updateLogDisplay = new UpdateLogDisplay();
             updateLogDisplay.hook();
             //监听更新
-            UpdateObserver updateObserver = new UpdateObserver();
-            updateObserver.runObserver();
+            UpdateTask updateTask = new UpdateTask();
+            updateTask.init();
         }
     }
 

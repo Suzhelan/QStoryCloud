@@ -12,11 +12,11 @@ import dalvik.system.DexClassLoader;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
-import top.linl.qstorycloud.config.LocalModuleData;
 import top.linl.qstorycloud.hook.HookEnv;
 import top.linl.qstorycloud.hook.PathTool;
 import top.linl.qstorycloud.log.QSLog;
-import top.linl.qstorycloud.model.LocalModuleInfo;
+import top.sacz.qstory.config.ModuleConfig;
+import top.sacz.qstory.net.bean.ModuleInfo;
 
 /**
  * 模块加载器，真正加载模块apk的地方
@@ -28,12 +28,12 @@ public class ModuleLoader {
      */
     private boolean hasConditionLoading() {
         //模块信息为空
-        LocalModuleInfo localModuleInfo = LocalModuleData.getLastModuleInfo();
-        if (localModuleInfo == null) {
+        ModuleInfo localModuleInfo = ModuleConfig.INSTANCE.getModuleInfo();
+        if (localModuleInfo.getVersionCode() == 0) {
             return false;
         }
         //模块文件为空
-        File moduleApkFile = new File(localModuleInfo.getModuleApkPath());
+        File moduleApkFile = new File(localModuleInfo.getPath());
         return moduleApkFile.exists();
     }
 
@@ -62,9 +62,9 @@ public class ModuleLoader {
         //打开了安全模式不加载模块
         if (isOpenSafeMode()) return;
         if (hasConditionLoading()) {
-            LocalModuleInfo localModuleInfo = LocalModuleData.getLastModuleInfo();
+            ModuleInfo moduleInfo = ModuleConfig.INSTANCE.getModuleInfo();
             //加载模块
-            loadModuleAPKAndHook(localModuleInfo.getModuleApkPath());
+            loadModuleAPKAndHook(moduleInfo.getPath());
         }
     }
 

@@ -11,7 +11,7 @@ import top.linl.qstorycloud.util.SpHelper;
 public class LocalModuleData {
 
 
-    private static final SpHelper spHelper = SpHelper.Companion.getMMKV("ModuleData");
+    private static final SpHelper spHelper =new SpHelper("ModuleData");
 
     private LocalModuleData() {
     }
@@ -28,15 +28,15 @@ public class LocalModuleData {
     public static void addModuleInfo(LocalModuleInfo localModuleInfo) {
         List<LocalModuleInfo> dataList = getDataList();
         dataList.add(localModuleInfo);
-        spHelper.encode("dataList", dataList);
+        spHelper.put("dataList", dataList);
     }
 
     public static void clear() {
-        spHelper.encode("dataList", new ArrayList<LocalModuleInfo>());
+        spHelper.put("dataList", new ArrayList<LocalModuleInfo>());
     }
 
     private static List<LocalModuleInfo> getDataList() {
-        List<LocalModuleInfo> result = spHelper.decodeType("dataList", new TypeReference<ArrayList<LocalModuleInfo>>() {
+        List<LocalModuleInfo> result = spHelper.getType("dataList", new TypeReference<ArrayList<LocalModuleInfo>>() {
         });
         if (result == null) {
             result = new ArrayList<>();
