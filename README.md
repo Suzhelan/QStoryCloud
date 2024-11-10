@@ -12,7 +12,7 @@
 再通过Dex/Apk热加载进行加载模块
 ---
 ### 使用的技术栈
-- ~~SQLite~~ 改为使用MMKV,简单数据用SQLite会增加数据库维护成本
+- ~~SQLite~~ ~~改为使用MMKV~~,使用FastKv，简单数据用SQLite会增加数据库维护成本
 - XPosed Hook
 - OkHttp,~~RxJava~~ Kotlin协程Flow更加轻量,FastJSON
 - 跨进程通信（跨应用）ContentProvider
